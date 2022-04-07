@@ -9,10 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SampleWidget">
-        <meta-data
-            android:name="com.google.android.actions"
-            android:resource="@xml/button.xml" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
