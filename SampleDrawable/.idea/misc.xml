@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/git_repository/do-it-example/SampleDrawable/app/src/main/res/drawable/back_drawable.xml" value="0.367" />
+        <entry key="..\:/git_repository/do-it-example/SampleDrawable/app/src/main/res/drawable/border_drawable.xml" value="0.367" />
         <entry key="..\:/git_repository/do-it-example/SampleDrawable/app/src/main/res/drawable/cursor_drawable.xml" value="0.367" />
+        <entry key="..\:/git_repository/do-it-example/SampleDrawable/app/src/main/res/drawable/rect_drawable.xml" value="0.367" />
         <entry key="..\:/git_repository/do-it-example/SampleDrawable/app/src/main/res/layout/activity_main.xml" value="0.4" />
       </map>
     </option>
