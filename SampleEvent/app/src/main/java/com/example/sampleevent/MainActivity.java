@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -90,5 +92,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void println(String data) {
         textView.append(data + "\n");
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Toast.makeText(this, "시스템 [BACK] 버튼이 눌렸습니다.",
+                    Toast.LENGTH_LONG).show();
+            return true;
+        }
+
+        return false;
     }
 }
