@@ -15,8 +15,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         println("응답-> " + response);
+
+                        processResponse(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -73,6 +82,25 @@ public class MainActivity extends AppCompatActivity {
         request.setShouldCache(false);
         requestQueue.add(request);
         println("요청 보냄");
+    }
+
+    public void processResponse(String response) {
+        Gson gson = new Gson();
+        List<FameWord> dataList = new ArrayList<FameWord>();
+
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray jsonArray = jsonObject.getJSONArray("dataList");
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                FameWord word = gson.fromJson(jsonArray.get(i).toString(), FameWord.class);
+                dataList.add(word);
+            }
+
+            println("데이터 카운트 : " + dataList.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void println(String data) {
