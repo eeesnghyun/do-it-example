@@ -1,11 +1,15 @@
 package com.example.samplerequest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -29,7 +33,8 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     EditText editText;
-    TextView textView;
+    RecyclerView recyclerView;
+    WordAdapter wordAdapter;
 
     static RequestQueue requestQueue;
 
@@ -39,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         editText = findViewById(R.id.editText);
-        textView = findViewById(R.id.textView);
+        recyclerView = findViewById(R.id.recyclerView);
 
         Button button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener(){
@@ -52,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
+
+        LinearLayoutManager layoutManager =
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        wordAdapter = new WordAdapter();
+        recyclerView.setAdapter(wordAdapter);
     }
 
     public void makeRequest() {
@@ -86,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void processResponse(String response) {
         Gson gson = new Gson();
-        List<FameWord> dataList = new ArrayList<FameWord>();
 
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -94,16 +105,19 @@ public class MainActivity extends AppCompatActivity {
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 FameWord word = gson.fromJson(jsonArray.get(i).toString(), FameWord.class);
-                dataList.add(word);
+
+                wordAdapter.addItem(word);
             }
 
-            println("데이터 카운트 : " + dataList.size());
+            println("데이터 카운트 : " + jsonArray.length());
+
+            wordAdapter.notifyDataSetChanged();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void println(String data) {
-        textView.append(data + "\n");
+        Log.d("MainActivity", data);
     }
 }
